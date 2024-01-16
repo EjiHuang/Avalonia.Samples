@@ -1,0 +1,44 @@
+<UserControl
+    x:Class="SampleView.Views.MainView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:scg="using:System.Collections"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:vm="clr-namespace:SampleView.ViewModels"
+    Width="800"
+    Height="600"
+    x:DataType="vm:MainViewModel"
+    mc:Ignorable="d">
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+    <TabControl Margin="0,0,0,10">
+        <TabItem Header="Controls">
+            <StackPanel
+                Width="250"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="10">
+                <TextBox Watermark="Username" />
+                <MaskedTextBox Mask="(+86) ###-####-####" />
+                <AutoCompleteBox ItemsSource="{ReflectionBinding $parent[UserControl].Animals}" Watermark="Animal" />
+                <NumericUpDown
+                    Maximum="10"
+                    Minimum="0"
+                    Value="1.0" />
+                <ToggleSwitch />
+                <ToggleSplitButton Width="100">
+                    <ToggleSplitButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuItem Header="Item 1" />
+                            <MenuItem Header="Item 2" />
+                            <MenuItem Header="Item 3" />
+                        </MenuFlyout>
+                    </ToggleSplitButton.Flyout>
+                </ToggleSplitButton>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</UserControl>
