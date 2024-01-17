@@ -40,5 +40,85 @@
                 </ToggleSplitButton>
             </StackPanel>
         </TabItem>
+        <TabItem Header="Panels">
+            <DockPanel>
+                <DockPanel.Styles>
+                    <Style Selector="StackPanel Rectangle">
+                        <Setter Property="Fill" Value="LightGreen" />
+                        <Setter Property="Width" Value="75" />
+                        <Setter Property="Height" Value="75" />
+                    </Style>
+                    <Style Selector="Grid Rectangle">
+                        <Setter Property="Fill" Value="LightCoral" />
+                        <Setter Property="Margin" Value="5" />
+                    </Style>
+                </DockPanel.Styles>
+                <StackPanel
+                    Margin="5"
+                    DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <Rectangle />
+                    <Rectangle />
+                    <Rectangle />
+                    <Rectangle />
+                    <Rectangle />
+                </StackPanel>
+                <Grid
+                    ColumnDefinitions="*,*"
+                    RowDefinitions="*,2*,75"
+                    ShowGridLines="True">
+                    <Rectangle />
+                    <Rectangle Grid.Column="1" />
+                    <Rectangle Grid.Row="1" />
+                    <Rectangle Grid.Row="1" Grid.Column="1" />
+                    <Rectangle Grid.Row="2" Grid.ColumnSpan="2" />
+                </Grid>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Bindings">
+            <UniformGrid Columns="2" Rows="2">
+                <UniformGrid.Styles>
+                    <Style Selector="UniformGrid > :is(Control)">
+                        <Setter Property="Margin" Value="10" />
+                    </Style>
+                </UniformGrid.Styles>
+                <Panel>
+                    <Border Width="{Binding $self.Bounds.Height}" Background="Gray" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="24"
+                        Foreground="White"
+                        Text="Width = Height" />
+                </Panel>
+                <StackPanel VerticalAlignment="Center" Spacing="10">
+                    <TextBlock Margin="10,0" Text="{Binding #userInput.Text, Mode=OneWay, StringFormat='User Input: {0}'}" />
+                    <TextBox Name="userInput" Text="Hello, world!" />
+                </StackPanel>
+                <StackPanel Spacing="10">
+                    <StackPanel.Styles>
+                        <Style Selector="TextBox">
+                            <Setter Property="IsReadOnly" Value="True" />
+                        </Style>
+                    </StackPanel.Styles>
+                    <TextBox Text="{Binding $parent[TabItem].IsSelected, StringFormat='TabItem.IsSelected: {0}', Mode=OneWay}" />
+                    <TextBox Text="{Binding $parent[StackPanel].Bounds.Width, StringFormat='Panel.ActualWidth: {0:f3}', Mode=OneWay}" />
+                    <TextBox>
+                        <TextBox.Text>
+                            <MultiBinding StringFormat="Window.Size: {0:f0}x{1:f0}">
+                                <Binding Mode="OneWay" Path="$parent[Window].Bounds.Width" />
+                                <Binding Mode="OneWay" Path="$parent[Window].Bounds.Height" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <CheckBox Content="IsVisible" IsChecked="True" />
+                    <Rectangle
+                        Height="30"
+                        Fill="PapayaWhip"
+                        IsVisible="{Binding $parent.((CheckBox)Children[3]).IsChecked}" />
+                </StackPanel>
+            </UniformGrid>
+        </TabItem>
     </TabControl>
 </UserControl>
